@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "id": {
+      "type": "keyword"
+    },
+    "name": {
+      "type": "text"
+    },
+    "author": {
+      "type": "nested",
+      "properties": {
+        "id": {
+          "type": "keyword"
+        },
+        "name": {
+          "type": "text"
+        }
+      }
+    },
+    "price": {
+      "type": "nested",
+      "properties": {
+        "id": {
+          "type": "keyword"
+        },
+        "currency": {
+          "type": "text"
+        },
+        "amount": {
+          "type": "double"
+        }
+      }
+    }
+  }
+}
