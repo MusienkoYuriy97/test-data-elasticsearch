@@ -3,6 +3,7 @@ package com.example.testdataelasticsearch.util;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.json.JsonData;
 import com.example.testdataelasticsearch.entity.search.SearchRequestDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +38,12 @@ public final class NativeQueryHelper {
             nativeQueryBuilder.withSort(sortOptions);
         }
         return nativeQueryBuilder.build();
+    }
+
+    static NativeQuery buildRangedNativeQuery(final String field, final Date date) {
+        return NativeQuery.builder()
+                .withQuery(q -> q.range(r -> r.field(field).gte(JsonData.of(date))))
+                .build();
     }
 
     private static void applySort(final SearchRequestDTO dto, final NativeQueryBuilder nativeQueryBuilder) {
