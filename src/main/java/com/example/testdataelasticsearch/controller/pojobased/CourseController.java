@@ -1,7 +1,6 @@
 package com.example.testdataelasticsearch.controller.pojobased;
 
 import com.example.testdataelasticsearch.entity.pojo.Course;
-import com.example.testdataelasticsearch.entity.search.SearchRequestDTO;
 import com.example.testdataelasticsearch.service.pojobased.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/course")
 @RequiredArgsConstructor
@@ -20,7 +17,7 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping
-    public void save(@RequestBody Course course) {
+    public void save(@RequestBody final Course course) {
         courseService.save(course);
     }
 
@@ -29,8 +26,5 @@ public class CourseController {
         return courseService.getById(id);
     }
 
-    @PostMapping("/search")
-    public List<Course> search(@RequestBody SearchRequestDTO dto) {
-        return courseService.search(dto);
-    }
+
 }

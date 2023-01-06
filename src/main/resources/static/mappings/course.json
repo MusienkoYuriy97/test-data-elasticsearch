@@ -6,6 +6,9 @@
     "name": {
       "type": "text"
     },
+    "createdAt": {
+      "type": "date"
+    },
     "author": {
       "type": "nested",
       "properties": {

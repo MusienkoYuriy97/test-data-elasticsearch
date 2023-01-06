@@ -6,21 +6,20 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SearchHintsMapper {
     public static <T> List<T> toList(final SearchHits<T> searchHits) {
-        final List<T> list = new ArrayList<>();
-        for (final SearchHit<T> searchHit : searchHits.getSearchHits()) {
-            final T content = searchHit.getContent();
-            if (nonNull(content)) {
-                list.add(content);
-            }
+        if (isNull(searchHits)) {
+            return null;
         }
-        return list;
+        return searchHits
+                .getSearchHits().stream()
+                .map(SearchHit::getContent)
+                .collect(Collectors.toList());
     }
 }
