@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.IndexOperations;
-import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.document.Document;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.Query;
@@ -39,13 +38,19 @@ public class IndexService {
     }
 
     public List<Course> search(final String indexName, final SearchRequestDTO dto) {
-        final var query = Optional.ofNullable(SearchUtil.buildQuery(dto))
+        final var query = Optional.ofNullable(SearchUtil.sortedQuery(dto))
                 .orElseThrow(() -> new RuntimeException("Query is empty"));
         return executeQuery(indexName, query);
     }
 
     public List<Course> searchRange(final String indexName, final Date date) {
-        final var query = Optional.ofNullable(SearchUtil.buildQueryRange("createdAt", date))
+        final var query = Optional.ofNullable(SearchUtil.rangedQuery("createdAt", date))
+                .orElseThrow(() -> new RuntimeException("Query is empty"));
+        return executeQuery(indexName, query);
+    }
+
+    public List<Course> searchCreatedSince(String indexName, SearchRequestDTO dto, Date date) {
+        final var query = Optional.ofNullable(SearchUtil.createdSinceQuery("createdAt", dto, date))
                 .orElseThrow(() -> new RuntimeException("Query is empty"));
         return executeQuery(indexName, query);
     }
@@ -86,5 +91,4 @@ public class IndexService {
             log.info("Index with name: " + indexName + " war created");
         }
     }
-
 }

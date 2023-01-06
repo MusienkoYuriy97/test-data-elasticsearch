@@ -25,6 +25,13 @@ public class IndexMapping {
         return indexService.search(indexName, dto);
     }
 
+    @PostMapping("{indexName}/search/bool/{date}")
+    public List<Course> searchCreatedSince(@PathVariable final String indexName,
+                               @RequestBody final SearchRequestDTO dto,
+                               @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") final Date date) {
+        return indexService.searchCreatedSince(indexName, dto, date);
+    }
+
     @PostMapping("{indexName}/search/{date}")
     public List<Course> searchRange(@PathVariable final String indexName,
                                     @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") final Date date) {
