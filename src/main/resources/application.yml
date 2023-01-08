@@ -1,3 +1,17 @@
 elasticsearch:
   url: localhost:9200
   deleteExistingIndex: false
+# Kafka consumer configurations
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: test-kafka-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.example.testdataelasticsearch.configuration.kafka.CourseDeserializer
+# Kafka values
+kafka:
+  topic:
+    name:
+      course: course_topic

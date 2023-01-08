@@ -1,10 +1,8 @@
 package com.example.testdataelasticsearch.entity.pojo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class Author {
     private String id;
     private String name;

@@ -1,13 +1,11 @@
 package com.example.testdataelasticsearch.entity.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 public class Course {
     private String id;
     private String name;
